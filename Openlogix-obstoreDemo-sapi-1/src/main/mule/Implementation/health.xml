@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="healthFlow" doc:id="56f0d918-5812-49cc-adc2-ed9b317263e4" >
+		<http:listener doc:name="Listener" doc:id="5c7a36ee-0457-46b5-a6ba-8a797bb2d1d5" config-ref="HTTP_Listener_config" path="/health"/>
+		<flow-ref doc:name="Flow Reference" doc:id="8c1c0f07-f46a-4663-bc9d-e71026794862" name="common-health-flowSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f3dd5dcc-23b2-4b44-9819-1e3290bda8ae" message="Health EndPoint Triggered"/>
+	</flow>
+</mule>

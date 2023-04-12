@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="postObStore" doc:id="287ba480-3a2b-4a16-9150-9b513ca4aca5" >
+		<http:listener doc:name="Listener" doc:id="f629cb63-4ed7-4b0c-a9c0-59c0f8829495" config-ref="HTTP_Listener_config" path="/obstore" />
+		<os:store doc:name="ObjectStore" doc:id="48df6f50-1253-494c-8ed0-2def7c0d5bba" key="#[attributes.headers.key]" >
+			<os:value ><![CDATA[#[attributes.headers.val]]]></os:value>
+		</os:store>
+		<ee:transform doc:name="Response" doc:id="8c2534f7-7a0f-4181-ac29-1f61eae43c01" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	ObjectStore : "Sucess"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger-Response" doc:id="21ff4cf5-6f01-4565-89f8-1f34e003f623" message='#[ObjectStore: "Success"]' />
+	</flow>
+</mule>

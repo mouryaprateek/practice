@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:os="http://www.mulesoft.org/schema/mule/os"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/os http://www.mulesoft.org/schema/mule/os/current/mule-os.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="obstoreRetrieve" doc:id="78ccbc75-aac1-4173-80ab-0c68f526ea2d">
+		<http:listener doc:name="Listener" doc:id="c429116c-a6d9-4e13-98f4-ff4521173f9b" config-ref="HTTP_Listener_config" path="/obr" />
+		<os:retrieve-all doc:name="ObjectStore_Retrieve_all" doc:id="307e36a5-8f81-4a90-9453-dddc72d881d8" />
+		<ee:transform doc:name="Response" doc:id="4d1dcf0a-cd5c-400d-93e8-002a9ba69b04">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger-Payload" doc:id="5404ee33-7831-41d8-b62d-3002d8a2fa41" message="#[payload]" />
+	</flow>
+</mule>

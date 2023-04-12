@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="dc7f06db-c10b-48d0-b581-5f4f66d2d12e" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration-properties doc:name="common-properties" doc:id="daf90b61-0058-425f-abf7-9dd0b25171b4" file="config/common.yaml" />
+	<configuration-properties doc:name="env-properties" doc:id="e5326db6-4c14-4c7d-91f8-6e5bc1006b0b" file="config/${mule.env}.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="2613f2db-a395-4596-a18c-f97deaf4e368" file="config/secure-${mule.env}.yaml" key="${mule.key}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<global-property doc:name="Global Property" doc:id="f7030a0f-ab47-440e-8f08-4ebfb9671d87" name="mule.env" value="dev" />
+	<global-property doc:name="Global Property" doc:id="30c30f2d-a457-42c1-950c-a897b345103c" name="mule.key" value="1234567890" />
+	<import doc:name="common-health-flow" doc:id="cd200c20-0a8b-4a8f-8ede-b86062a6f84c" file="common-health-flow.xml" />
+</mule>
